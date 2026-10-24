@@ -3,282 +3,537 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Браузер GGipes — Свободный, быстрый и защищенный</title>
+    <title>GGipes — Национальный браузер нового поколения</title>
     <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #0056b3;
+            --accent: #00e676;
+            --bg-dark: #070b19;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #0b0b0f;
-            color: #fbfbfe;
+            background-color: var(--bg-dark);
+            color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Фоновые градиенты в стиле Firefox */
-        .bg-glow-1 {
-            position: absolute;
-            top: -150px;
-            right: -100px;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(255, 71, 87, 0.15) 0%, rgba(255, 71, 87, 0) 70%);
-            filter: blur(120px);
-            z-index: -1;
+        /* Фоновые неоновые переливы */
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(130px);
+            z-index: -2;
+            opacity: 0.4;
+            animation: floatGlow 10s ease-in-out infinite alternate;
+        }
+        .glow-1 { top: -100px; left: -100px; background: rgba(0, 210, 255, 0.4); }
+        .glow-2 { bottom: -150px; right: -150px; background: rgba(0, 230, 118, 0.3); animation-delay: -5s; }
+
+        @keyframes floatGlow {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(30px) scale(1.1); }
         }
 
-        .bg-glow-2 {
-            position: absolute;
-            top: 400px;
-            left: -200px;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(142, 68, 173, 0.15) 0%, rgba(142, 68, 173, 0) 70%);
-            filter: blur(140px);
-            z-index: -1;
-        }
-
-        /* Шапка */
-        header {
+        /* ЭКРАН ПРИВЕТСТВИЯ (WELCOME OVERLAY) */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 11, 25, 0.92);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 9999;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 24px 6%;
-            background: rgba(11, 11, 15, 0.8);
-            backdrop-filter: blur(10px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+        }
+
+        #welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .welcome-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--glass-shadow);
+            padding: 50px 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+            animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .welcome-logo {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 24px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .welcome-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .welcome-card h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-card h1 span {
+            background: linear-gradient(90deg, #00d2ff, #00e676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-card p {
+            color: #9ca3af;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        .glass-btn {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 118, 230, 0.3));
+            border: 1px solid rgba(0, 210, 255, 0.5);
+            color: #ffffff;
+            padding: 16px 36px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .glass-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.4), rgba(0, 118, 230, 0.5));
+            border-color: #00d2ff;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 210, 255, 0.4);
+        }
+
+        /* ОСНОВНОЙ САЙТ */
+        header {
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(7, 11, 25, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
         }
 
-        .logo {
+        .logo-area {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             letter-spacing: -0.5px;
-            color: #ffffff;
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #ff4757, #ff6b81, #ffa502);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: 900;
-            font-size: 20px;
-            box-shadow: 0 4px 20px rgba(255, 71, 87, 0.4);
+        .logo-area img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .logo-area span {
+            background: linear-gradient(90deg, #00d2ff, #00e676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         nav {
             display: flex;
-            align-items: center;
             gap: 30px;
         }
 
         nav a {
-            color: #d7d7db;
+            color: #d1d5db;
             text-decoration: none;
-            font-size: 15px;
             font-weight: 500;
+            font-size: 15px;
             transition: color 0.2s;
         }
 
         nav a:hover {
-            color: #ff4757;
+            color: #00d2ff;
         }
 
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
-            border-radius: 50px;
-            transition: background 0.2s;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
-
-        /* Главный блок (Hero) */
+        /* Hero Секция */
         .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 120px 20px 80px;
-            max-width: 900px;
+            padding: 80px 20px 40px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
+        .badge {
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+            color: var(--accent);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+        }
+
         .hero h1 {
-            font-size: 64px;
-            line-height: 1.1;
-            margin-bottom: 24px;
+            font-size: 52px;
+            line-height: 1.15;
             font-weight: 800;
-            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
         }
 
         .hero h1 span {
-            background: linear-gradient(90deg, #ff4757, #ff6b81, #ffa502);
+            background: linear-gradient(90deg, #00d2ff, #00e676);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 20px;
-            color: #b1b1b3;
-            margin-bottom: 45px;
-            max-width: 680px;
-            line-height: 1.5;
-        }
-
-        .download-btn {
-            background: #ff4757;
-            color: #ffffff;
-            padding: 20px 48px;
             font-size: 18px;
-            font-weight: 700;
-            border-radius: 50px;
-            text-decoration: none;
-            box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4);
-            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
-            display: inline-block;
-        }
-
-        .download-btn:hover {
-            background: #ff6b81;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(255, 71, 87, 0.6);
-        }
-
-        .subtext {
-            font-size: 13px;
-            color: #8f8f91;
-            margin-top: 16px;
-        }
-
-        /* Секция возможностей */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1150px;
-            margin: 60px auto 120px;
-            padding: 0 24px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            padding: 40px 32px;
-            transition: border-color 0.3s, transform 0.3s, background 0.3s;
-        }
-
-        .card:hover {
-            border-color: rgba(255, 71, 87, 0.4);
-            background: rgba(255, 255, 255, 0.04);
-            transform: translateY(-6px);
-        }
-
-        .card-icon {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 22px;
-            margin-bottom: 14px;
-            color: #ffffff;
-            font-weight: 700;
-        }
-
-        .card p {
-            color: #b1b1b3;
-            font-size: 16px;
+            color: #9ca3af;
+            max-width: 650px;
+            margin-bottom: 35px;
             line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        /* ИНТЕРАКТИВНЫЙ МАКЕТ БРАУЗЕРА (ПРЕЗЕНТАЦИЯ СКРИНШОТА) */
+        .browser-mockup-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        .browser-window {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .browser-window:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 210, 255, 0.15);
+            border-color: rgba(0, 210, 255, 0.3);
+        }
+
+        .browser-topbar {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            gap: 15px;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .browser-tab {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 6px 20px;
+            border-radius: 8px 8px 0 0;
+            font-size: 13px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: none;
+        }
+
+        .browser-tab img {
+            width: 14px;
+            height: 14px;
+        }
+
+        .browser-screen-content {
+            width: 100%;
+            display: block;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        /* Сетка возможностей (Glass Cards) */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 210, 255, 0.4);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-icon-box {
+            font-size: 32px;
+            margin-bottom: 20px;
+            background: rgba(0, 210, 255, 0.1);
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .glass-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .glass-card p {
+            color: #9ca3af;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Секция скачивания */
+        .download-section {
+            max-width: 900px;
+            margin: 0 auto 100px;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.08), rgba(0, 86, 179, 0.12));
+            border: 1px solid rgba(0, 210, 255, 0.25);
+            border-radius: 30px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .download-section h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .download-section p {
+            color: #9ca3af;
+            font-size: 16px;
+            margin-bottom: 30px;
         }
 
         /* Футер */
         footer {
             text-align: center;
-            padding: 50px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #8f8f91;
+            padding: 40px 20px;
+            border-top: 1px solid var(--glass-border);
+            color: #6b7280;
             font-size: 14px;
-            background: #07070a;
+            background: rgba(5, 8, 18, 0.8);
         }
 
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 42px;
-            }
-            .hero p {
-                font-size: 17px;
-            }
-            nav a:not(.nav-btn) {
-                display: none;
-            }
+            .hero h1 { font-size: 38px; }
+            .welcome-card { padding: 35px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow-1"></div>
-    <div class="bg-glow-2"></div>
+    <!-- Фоновые неоновые элементы -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
 
+    <!-- ЭКРАН ПРИВЕТСТВИЯ (WELCOME OVERLAY) С ВАШИМ ЛОГОТИПОМ -->
+    <div id="welcome-screen">
+        <div class="welcome-card">
+            <div class="welcome-logo">
+                <!-- Ваша иконка/логотип -->
+                <img src="icon_3.ico" alt="GGipes Logo">
+            </div>
+            <h1>Добро пожаловать в <span>GGipes</span></h1>
+            <p>Инновационный, быстрый и защищенный браузер Казахстана с интерфейсом нового поколения. Нажмите кнопку ниже, чтобы войти в систему.</p>
+            <button class="glass-btn" onclick="enterSite()">
+                Далее 
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ САЙТА -->
     <header>
-        <div class="logo">
-            <div class="logo-icon">G</div>
-            GGipes
+        <div class="logo-area">
+            <img src="icon_3.ico" alt="Logo">
+            <span>GGipes</span>
         </div>
         <nav>
             <a href="#features">Возможности</a>
-            <a href="#privacy">Конфиденциальность</a>
-            <a href="https://drive.google.com/file/d/1t5L86nQHfqKsNUQQcTvSZJ7uL6LeWI7m/view?usp=drive_link" target="_blank" class="nav-btn">Скачать</a>
+            <a href="#interface">Интерфейс</a>
+            <a href="#download">Скачать</a>
         </nav>
     </header>
 
-    <section class="hero" id="download">
-        <h1>Защитите свою приватность с <span>GGipes</span></h1>
-        <p>Браузер нового поколения, созданный для максимальной скорости, безопасности и удобного доступа к любимым сервисам в Казахстане.</p>
-        <a href="https://drive.google.com/file/d/1t5L86nQHfqKsNUQQcTvSZJ7uL6LeWI7m/view?usp=drive_link" target="_blank" class="download-btn">Загрузить GGipes</a>
-        <div class="subtext">Бесплатно для Windows • Свобода в интернете</div>
+    <section class="hero">
+        <div class="badge">🇰🇿 Национальный браузер нового поколения</div>
+        <h1>Скорость, приватность и стиль в <span>GGipes Browser</span></h1>
+        <p>Полностью переосмысленный веб-клиент с высокой оптимизацией под слабые и мощные ПК, защитой данных и абсолютным комфортом при серфинге.</p>
+        <div class="hero-actions">
+            <a href="https://drive.google.com/file/d/1t5L86nQHfqKsNUQQcTvSZJ7uL6LeWI7m/view?usp=drive_link" target="_blank" class="glass-btn">
+                Загрузить для Windows
+            </a>
+        </div>
     </section>
 
-    <section class="features" id="features">
-        <div class="card">
-            <div class="card-icon">🚀</div>
-            <h3>Молниеносная скорость</h3>
-            <p>Оптимизированная архитектура экономит системные ресурсы и открывает сайты за доли секунды без зависаний.</p>
+    <!-- СЕКЦИЯ С ИНТЕРАКТИВНЫМ ОКНОМ И ВАШИМ СКРИНШОТОМ -->
+    <section class="browser-mockup-container" id="interface">
+        <div class="browser-window">
+            <div class="browser-topbar">
+                <div class="browser-dots">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                </div>
+                <div class="browser-tab">
+                    <img src="icon_3.ico" alt="Tab Icon">
+                    Новая вкладка GGipes
+                </div>
+            </div>
+            <!-- Внедренный скриншот интерфейса -->
+            <img src="image_712a38.jpg" alt="GGipes Browser Interface" class="browser-screen-content">
         </div>
-        <div class="card">
-            <div class="card-icon">🔒</div>
-            <h3>Блокировка трекеров</h3>
-            <p>Автоматически пресекает попытки рекламных сетей и алгоритмов следить за вашими действиями в сети.</p>
+    </section>
+
+    <!-- СЕКЦИЯ ПРЕИМУЩЕСТВ (GLASS CARDS) -->
+    <section class="features-grid" id="features">
+        <div class="glass-card">
+            <div class="card-icon-box">⚡</div>
+            <h3>Мгновенный запуск</h3>
+            <p>Оптимизированная архитектура позволяет браузеру открываться за доли секунды и потреблять минимум оперативной памяти[cite: 5].</p>
         </div>
-        <div class="card">
-            <div class="card-icon">✨</div>
-            <h3>Удобный интерфейс</h3>
-            <p>Элегантный темный дизайн, вдохновленный лучшими стандартами индустрии, полностью адаптированный под пользователя.</p>
+        <div class="glass-card">
+            <div class="card-icon-box">🛡️</div>
+            <h3>Интеллектуальная защита</h3>
+            <p>Встроенные алгоритмы блокировки трекеров и рекламных сетей обеспечивают полную конфиденциальность ваших сессий.</p>
         </div>
+        <div class="glass-card">
+            <div class="card-icon-box">🏛️</div>
+            <h3>Интеграция с сервисами</h3>
+            <p>Специализированные инструменты для быстрого доступа к государственным и финансовым порталам Казахстана.</p>
+        </div>
+    </section>
+
+    <!-- БЛОК СКАЧИВАНИЯ С ПОДКЛЮЧЕННОЙ ССЫЛКОЙ -->
+    <section class="download-section" id="download">
+        <h2>Попробуйте GGipes в деле</h2>
+        <p>Присоединяйтесь к тысячам пользователей, оценивших скорость и удобство национального браузера.</p>
+        <a href="https://drive.google.com/file/d/1t5L86nQHfqKsNUQQcTvSZJ7uL6LeWI7m/view?usp=drive_link" target="_blank" class="glass-btn">
+            Скачать с Google Диска (v1.0)
+        </a>
     </section>
 
     <footer>
-        <p>© 2026 GGipes Browser Project. Свобода и конфиденциальность превыше всего.</p>
+        <p>© 2026 GGipes Browser Project, Казахстан. Все права защищены.</p>
     </footer>
 
+    <!-- СКРИПТ ДЛЯ ПЕРЕХОДА С ЭКРАНА ПРИВЕТСТВИЯ -->
+    <script>
+        function enterSite() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            welcomeScreen.classList.add('hidden');
+            // Плавное включение прокрутки после закрытия приветствия
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Блокируем скролл на время показа приветствия
+        document.body.style.overflow = 'hidden';
+    </script>
 </body>
 </html>
