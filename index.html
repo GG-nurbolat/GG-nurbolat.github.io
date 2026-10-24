@@ -103,12 +103,14 @@
             padding: 15px;
             box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .welcome-logo img {
+        .logo-svg {
             width: 100%;
             height: 100%;
-            object-fit: contain;
         }
 
         .welcome-card h1 {
@@ -179,10 +181,9 @@
             letter-spacing: -0.5px;
         }
 
-        .logo-area img {
+        .header-logo {
             width: 36px;
             height: 36px;
-            border-radius: 8px;
         }
 
         .logo-area span {
@@ -259,7 +260,7 @@
             margin-bottom: 60px;
         }
 
-        /* ИНТЕРАКТИВНЫЙ МАКЕТ БРАУЗЕРА (ПРЕЗЕНТАЦИЯ СКРИНШОТА) */
+        /* ИНТЕРАКТИВНЫЙ МАКЕТ БРАУЗЕРА */
         .browser-mockup-container {
             width: 100%;
             max-width: 1100px;
@@ -321,16 +322,46 @@
             border-bottom: none;
         }
 
-        .browser-tab img {
-            width: 14px;
-            height: 14px;
+        /* Воссозданный интерактивный экран браузера */
+        .browser-screen-mockup {
+            background: linear-gradient(180deg, #eaf4fd 0%, #f7faff 100%);
+            color: #1a202c;
+            padding: 80px 20px 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 500px;
         }
 
-        .browser-screen-content {
+        .mockup-logo {
+            width: 130px;
+            height: 130px;
+            margin-bottom: 20px;
+        }
+
+        .mockup-title {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #0099ff;
+            margin-bottom: 40px;
+        }
+
+        .mockup-search-bar {
+            background: #ffffff;
             width: 100%;
-            display: block;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
+            max-width: 580px;
+            padding: 14px 24px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 100, 200, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            color: #718096;
+            font-size: 15px;
         }
 
         /* Сетка возможностей (Glass Cards) */
@@ -432,15 +463,23 @@
     <div class="bg-glow glow-1"></div>
     <div class="bg-glow glow-2"></div>
 
-    <!-- ЭКРАН ПРИВЕТСТВИЯ (WELCOME OVERLAY) С ВАШИМ ЛОГОТИПОМ -->
+    <!-- ЭКРАН ПРИВЕТСТВИЯ С ВЕКТОРНЫМ ФИРМЕННЫМ ЛОГОТИПОМ GGIPES -->
     <div id="welcome-screen">
         <div class="welcome-card">
             <div class="welcome-logo">
-                <!-- Ваша иконка/логотип -->
-                <img src="icon_3.ico" alt="GGipes Logo">
+                <svg class="logo-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="ggGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00d2ff"/>
+                            <stop offset="100%" stop-color="#0056b3"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M 60 100 A 40 40 0 1 1 140 100 A 40 40 0 1 1 60 100 M 100 60 A 40 40 0 0 1 140 100" stroke="url(#ggGlow)" stroke-width="24" stroke-linecap="round"/>
+                    <path d="M 120 100 A 40 40 0 1 1 40 100" stroke="#00e676" stroke-width="20" stroke-linecap="round"/>
+                </svg>
             </div>
             <h1>Добро пожаловать в <span>GGipes</span></h1>
-            <p>Инновационный, быстрый и защищенный браузер Казахстана с интерфейсом нового поколения. Нажмите кнопку ниже, чтобы войти в систему.</p>
+            <p>Инновационный, быстрый и защищенный браузер Казахстана с интерфейсом нового поколения. Нажмите кнопку ниже, чтобы перейти на сайт.</p>
             <button class="glass-btn" onclick="enterSite()">
                 Далее 
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -451,7 +490,9 @@
     <!-- ОСНОВНОЙ КОНТЕНТ САЙТА -->
     <header>
         <div class="logo-area">
-            <img src="icon_3.ico" alt="Logo">
+            <svg class="header-logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 60 100 A 40 40 0 1 1 140 100 A 40 40 0 1 1 60 100" stroke="#00d2ff" stroke-width="24" stroke-linecap="round"/>
+            </svg>
             <span>GGipes</span>
         </div>
         <nav>
@@ -464,7 +505,7 @@
     <section class="hero">
         <div class="badge">🇰🇿 Национальный браузер нового поколения</div>
         <h1>Скорость, приватность и стиль в <span>GGipes Browser</span></h1>
-        <p>Полностью переосмысленный веб-клиент с высокой оптимизацией под слабые и мощные ПК, защитой данных и абсолютным комфортом при серфинге.</p>
+        <p>Полностью переосмысленный веб-клиент с высокой оптимизацией под любые системы, встроенной защитой данных и абсолютным комфортом при серфинге.</p>
         <div class="hero-actions">
             <a href="https://drive.google.com/file/d/1t5L86nQHfqKsNUQQcTvSZJ7uL6LeWI7m/view?usp=drive_link" target="_blank" class="glass-btn">
                 Загрузить для Windows
@@ -472,7 +513,7 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ С ИНТЕРАКТИВНЫМ ОКНОМ И ВАШИМ СКРИНШОТОМ -->
+    <!-- СЕКЦИЯ С МАКЕТОМ ОКНА БРАУЗЕРА -->
     <section class="browser-mockup-container" id="interface">
         <div class="browser-window">
             <div class="browser-topbar">
@@ -482,12 +523,24 @@
                     <div class="dot dot-green"></div>
                 </div>
                 <div class="browser-tab">
-                    <img src="icon_3.ico" alt="Tab Icon">
+                    <svg width="14" height="14" viewBox="0 0 200 200" fill="none">
+                        <circle cx="100" cy="100" r="80" stroke="#00d2ff" stroke-width="30"/>
+                    </svg>
                     Новая вкладка GGipes
                 </div>
             </div>
-            <!-- Внедренный скриншот интерфейса -->
-            <img src="image_712a38.jpg" alt="GGipes Browser Interface" class="browser-screen-content">
+            <!-- Воссозданный интерактивный экран интерфейса браузера -->
+            <div class="browser-screen-mockup">
+                <svg class="mockup-logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 60 100 A 40 40 0 1 1 140 100 A 40 40 0 1 1 60 100" stroke="#00d2ff" stroke-width="22" stroke-linecap="round"/>
+                    <path d="M 120 100 A 40 40 0 1 1 40 100" stroke="#00e676" stroke-width="18" stroke-linecap="round"/>
+                </svg>
+                <div class="mockup-title">GGIPES</div>
+                <div class="mockup-search-bar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    Введите поисковый запрос или URL
+                </div>
+            </div>
         </div>
     </section>
 
@@ -496,7 +549,7 @@
         <div class="glass-card">
             <div class="card-icon-box">⚡</div>
             <h3>Мгновенный запуск</h3>
-            <p>Оптимизированная архитектура позволяет браузеру открываться за доли секунды и потреблять минимум оперативной памяти[cite: 5].</p>
+            <p>Оптимизированная архитектура позволяет браузеру открываться за доли секунды и потреблять минимум оперативной памяти.</p>
         </div>
         <div class="glass-card">
             <div class="card-icon-box">🛡️</div>
@@ -513,7 +566,7 @@
     <!-- БЛОК СКАЧИВАНИЯ С ПОДКЛЮЧЕННОЙ ССЫЛКОЙ -->
     <section class="download-section" id="download">
         <h2>Попробуйте GGipes в деле</h2>
-        <p>Присоединяйтесь к тысячам пользователей, оценивших скорость и удобство национального браузера.</p>
+        <p>Присоединяйтесь к пользователям, оценившим скорость и удобство национального браузера.</p>
         <a href="https://drive.google.com/file/d/1t5L86nQHfqKsNUQQcTvSZJ7uL6LeWI7m/view?usp=drive_link" target="_blank" class="glass-btn">
             Скачать с Google Диска (v1.0)
         </a>
@@ -528,11 +581,9 @@
         function enterSite() {
             const welcomeScreen = document.getElementById('welcome-screen');
             welcomeScreen.classList.add('hidden');
-            // Плавное включение прокрутки после закрытия приветствия
             document.body.style.overflow = 'auto';
         }
         
-        // Блокируем скролл на время показа приветствия
         document.body.style.overflow = 'hidden';
     </script>
 </body>
