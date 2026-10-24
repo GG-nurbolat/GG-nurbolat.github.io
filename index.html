@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GGipes — Национальный браузер нового поколения</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
     <style>
         :root {
             --primary: #00d2ff;
@@ -31,7 +32,7 @@
             position: relative;
         }
 
-        /* Фоновые неоновые переливы */
+        /* Фоновые неоновые свечения */
         .bg-glow {
             position: fixed;
             width: 600px;
@@ -108,9 +109,10 @@
             justify-content: center;
         }
 
-        .logo-svg {
+        .welcome-logo img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
         }
 
         .welcome-card h1 {
@@ -184,6 +186,7 @@
         .header-logo {
             width: 36px;
             height: 36px;
+            object-fit: contain;
         }
 
         .logo-area span {
@@ -322,46 +325,16 @@
             border-bottom: none;
         }
 
-        /* Воссозданный интерактивный экран браузера */
-        .browser-screen-mockup {
-            background: linear-gradient(180deg, #eaf4fd 0%, #f7faff 100%);
-            color: #1a202c;
-            padding: 80px 20px 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            min-height: 500px;
+        .browser-tab img {
+            width: 14px;
+            height: 14px;
         }
 
-        .mockup-logo {
-            width: 130px;
-            height: 130px;
-            margin-bottom: 20px;
-        }
-
-        .mockup-title {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #0099ff;
-            margin-bottom: 40px;
-        }
-
-        .mockup-search-bar {
-            background: #ffffff;
+        .browser-screen-img {
             width: 100%;
-            max-width: 580px;
-            padding: 14px 24px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0, 100, 200, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid rgba(0, 150, 255, 0.2);
-            color: #718096;
-            font-size: 15px;
+            display: block;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
         /* Сетка возможностей (Glass Cards) */
@@ -463,20 +436,11 @@
     <div class="bg-glow glow-1"></div>
     <div class="bg-glow glow-2"></div>
 
-    <!-- ЭКРАН ПРИВЕТСТВИЯ С ВЕКТОРНЫМ ФИРМЕННЫМ ЛОГОТИПОМ GGIPES -->
+    <!-- ЭКРАН ПРИВЕТСТВИЯ С ВАШИМ LOGO (icon.ico) -->
     <div id="welcome-screen">
         <div class="welcome-card">
             <div class="welcome-logo">
-                <svg class="logo-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="ggGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#00d2ff"/>
-                            <stop offset="100%" stop-color="#0056b3"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M 60 100 A 40 40 0 1 1 140 100 A 40 40 0 1 1 60 100 M 100 60 A 40 40 0 0 1 140 100" stroke="url(#ggGlow)" stroke-width="24" stroke-linecap="round"/>
-                    <path d="M 120 100 A 40 40 0 1 1 40 100" stroke="#00e676" stroke-width="20" stroke-linecap="round"/>
-                </svg>
+                <img src="icon.ico" alt="GGipes Logo">
             </div>
             <h1>Добро пожаловать в <span>GGipes</span></h1>
             <p>Инновационный, быстрый и защищенный браузер Казахстана с интерфейсом нового поколения. Нажмите кнопку ниже, чтобы перейти на сайт.</p>
@@ -490,9 +454,7 @@
     <!-- ОСНОВНОЙ КОНТЕНТ САЙТА -->
     <header>
         <div class="logo-area">
-            <svg class="header-logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 60 100 A 40 40 0 1 1 140 100 A 40 40 0 1 1 60 100" stroke="#00d2ff" stroke-width="24" stroke-linecap="round"/>
-            </svg>
+            <img src="icon.ico" alt="GGipes Logo" class="header-logo">
             <span>GGipes</span>
         </div>
         <nav>
@@ -513,7 +475,7 @@
         </div>
     </section>
 
-    <!-- СЕКЦИЯ С МАКЕТОМ ОКНА БРАУЗЕРА -->
+    <!-- СЕКЦИЯ С ВАШИМ СКРИНШОТОМ (image.png) -->
     <section class="browser-mockup-container" id="interface">
         <div class="browser-window">
             <div class="browser-topbar">
@@ -523,24 +485,12 @@
                     <div class="dot dot-green"></div>
                 </div>
                 <div class="browser-tab">
-                    <svg width="14" height="14" viewBox="0 0 200 200" fill="none">
-                        <circle cx="100" cy="100" r="80" stroke="#00d2ff" stroke-width="30"/>
-                    </svg>
+                    <img src="icon.ico" alt="Icon">
                     Новая вкладка GGipes
                 </div>
             </div>
-            <!-- Воссозданный интерактивный экран интерфейса браузера -->
-            <div class="browser-screen-mockup">
-                <svg class="mockup-logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 60 100 A 40 40 0 1 1 140 100 A 40 40 0 1 1 60 100" stroke="#00d2ff" stroke-width="22" stroke-linecap="round"/>
-                    <path d="M 120 100 A 40 40 0 1 1 40 100" stroke="#00e676" stroke-width="18" stroke-linecap="round"/>
-                </svg>
-                <div class="mockup-title">GGIPES</div>
-                <div class="mockup-search-bar">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    Введите поисковый запрос или URL
-                </div>
-            </div>
+            <!-- Ваш оригинальный скриншот браузера -->
+            <img src="image.png" alt="GGipes Browser Screenshot" class="browser-screen-img">
         </div>
     </section>
 
