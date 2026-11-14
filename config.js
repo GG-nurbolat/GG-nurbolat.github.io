@@ -1,6 +1,6 @@
 // Все ссылки и версии меняются только здесь.
 window.GG = {
-  github: "https://github.com/USER/REPO",
+  github: "https://github.com/GG-nurbolat",
   oldVersionsRepo: "https://github.com/USER/ggipes-old-versions",
   // Платформа с заполненным url скачивается кнопкой. Пустой url: покажется окно «Скоро выйдет».
   platforms: [
